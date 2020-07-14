@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Css/ToDo.css">
+</head>
+
+<body>
+    <div style="padding:0 0 0 60%;">
+        <button type="button" onclick="Logout()" class="registerbtn">Logout</button>
+    </div>
+    <h2><a href="../Views/ProfileDashboard.html">ProfileDashboard</a>.</h2>
+    <div style="padding:0 0 0 30%;">
+        <button type="button" onclick="Clearfilters()" class="registerbtn">Clear filter</button>
+        <button type="button" onclick="MultipleDelete()" class="registerbtn">Delete </button>
+    </div>
+
+    <div class="container">
+        <div> CREATE ToDoItem <a href="../Views/CreateToDo.html">Create</a>.</div>
+
+        <hr>
+        <table id="myTable">
+            <tr class="header">
+
+                <th style="width:5%;" onclick="SortId()">ToDoId</th>
+                <th style="width:5%;" onclick="SortToDoinput()">ToDo <input type="text" id="ToDoInput" onclick="event.stopPropogation();" onkeyup="ToDoInputFunction()"></th>
+                <th style="width:15%;">Categories
+                    <div class="multiselect">
+                        <div class="selectBox" onclick="showCheckboxes()">
+                            <select>
+            <option>Select an option</option>
+          </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        <div id="checkboxes">
+                            <label for="Technical">
+            <input type="checkbox" value ="Technical" onchange="IsCategoryCheck()" id="Technical" />Technical</label>
+                            <label for="Practical">
+            <input type="checkbox" value ="Practical" onchange="IsCategoryCheck()" id="Practical" />Practical</label>
+                        </div>
+                    </div>
+                </th>
+                <th style="width:20%;">Less than Reminder Date <input type="date" name="Date" id="Date" onchange="DateFunction()"></th>
+                <th style="width:15%;">Is Pending( Items due date greater than current date) <input type="checkbox" id="PendingDate" onchange="IsPendingCheck()"></th>
+
+                <th style="width:25%;">Status<br/> <input value="Pending" type="checkbox" id="StatusPending" onchange="IsStatusPendingCheck()">Pending</input>
+                    <br/> <input value="Done" type="checkbox" id="StatusDone" onchange="IsStatusPendingCheck()">Done</input>
+                </th>
+                <th style="width:5%;">Edit</th>
+                <th style="width:5%;">Delete</th>
+                <th style="width:5%;">Check</th>
+            </tr>
+        </table>
+    </div>
+    <!-- container end div-->
+
+</body>
+<script src="../Scripts/TodoItem.js"></script>
+<script src="../Scripts/Logout.js"></script>
+
+</html>

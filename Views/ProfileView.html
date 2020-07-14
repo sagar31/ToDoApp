@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../Css/Profile.css">
+</head>
+
+<body>
+    <h2><a href="../Views/ProfileDashboard.html">ProfileDashboard</a>.</h2>
+    <div class="container emp-profile">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img id="ig" src="" alt="" />
+                        <div class="file btn btn-primary">
+                            Change Photo
+                            <input type="file" accept="image/*" name="ProfileImage" id="ProfileImage" onchange="getImageData();" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row" style="padding:1%">
+                                <div class="col-md-6">
+                                    <label>Email</label> Note: (If username is updated password would change to same as username)
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="email"></p>
+                                    <input class="form-control" type="text" placeholder="Enter Email" name="emailEdit" id="emailEdit" required>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:1%">
+                                <div class="col-md-6">
+                                    <label>First Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="FirstName"></p>
+                                    <input class="form-control" type="text" placeholder="First Name" name="FirstName" id="FirstNameEdit" required>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:1%">
+                                <div class="col-md-6">
+                                    <label>Last Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="LastName"></p>
+                                    <input class="form-control" type="text" placeholder="Last Name" name="LastName" id="LastNameEdit" required>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:1%">
+                                <div class="col-md-6">
+                                    <label>Gender</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="Gender"></p>
+                                    <select class="form-control" name="GenderEdit" id="GenderEdit">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:1%">
+                                <div class="col-md-6">
+                                    <label>Address</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="Address"></p>
+                                    <textarea rows="4" cols="30" class="form-control" name="AddressEdit" id="AddressEdit" required> </textarea>
+
+
+                                </div>
+                            </div>
+                            <input type="button" onclick="UpdateProfile()" id="btnsubmit" class="registerbtn" value="Submit" />
+                            <input type="button" id="btnreset" onclick="ResetProfile()" class="registerbtn" value="Reset" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <input type="button" onclick="EditProfile()" class="regbtn" value="Edit" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" onclick="Logout()" class="regbtn">Logout</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="../Scripts/Logout.js"></script>
+<script src="../Scripts/Profile.js"></script>
+
+</html>

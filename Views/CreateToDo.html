@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Css/CreateToDo.css">
+</head>
+
+<body>
+
+    <div style="padding:0 0 0 60%;">
+        <button type="button" onclick="Logout()" class="registerbtn">Logout</button>
+    </div>
+    <h2><a href="../Views/ToDoItem.html">ToDo Items</a></h2>
+
+
+
+    <form name="CreateToDo" onsubmit="return CreateToDoItem()" method="POST">
+        <div class="container">
+            <h1>Create ToDo Item</h1>
+
+            <label for="ToDoItem"><b>ToDo Item</b></label>
+            <input class="form-control" type="text" placeholder="ToDo Item" name="ToDoItem" id="ToDoItem" required>
+            <hr>
+            <label for="Date"><b>Date</b></label>
+            <input class="form-control" name="Date" type="date" id="Date" required>
+            <hr>
+            <label for="Categories"><b>Categories</b></label>
+            <div class="multiselect">
+                <div class="selectBox" onclick="showCheckboxesForm()">
+                    <select id="showCheckboxesForm">
+            <option>Select an option</option>
+          </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div>
+                    <label for="Technical">
+            <input  type="checkbox" id="Technical"  value="Technical"  />Technical</label>
+                    <label for="Practical">
+            <input type="checkbox" id="Practical"   value="Practical"  />Practical</label>
+                </div>
+            </div>
+
+
+            <hr>
+            <label for="Status"><b>Status</b></label>
+            <select class="form-control" name="Status" id="Status">
+        <option value="Pending">Pending</option>
+        <option value="Done">Done</option>
+      </select>
+            <hr>
+
+            <label for="isReminder">IsReminder?</label>
+            <input class="form-control" onchange="ChangeIsReminder()" type="radio" name="isReminder" id="isReminderYes" value="Yes" checked>Yes</input>
+            <input class="form-control" onchange="ChangeIsReminder()" type="radio" name="isReminder" id="isReminderNo" value="No">No</input>
+            <hr>
+            <div id="divReminderDate">
+                <label for="ReminderDate"><b>Reminder Date</b></label>
+                <input class="form-control" name="ReminderDate" type="date" id="ReminderDate">
+            </div>
+            <hr>
+
+            <label for="isPublic">isPublic?</label>
+            <input class="form-control" type="radio" name="isPublic" id="isPublicYes" value="Yes" checked>Yes</input>
+            <input class="form-control" type="radio" name="isPublic" value="No" id="isPublicNo">No</input>
+
+            <hr>
+            <label for="ProfileImage"><b>Profile Image</b></label>
+            <input type="file" name="ProfileImage" id="ProfileImage" accept="image/*" onchange="getImageData();">
+            <img style="height: 5%;width: 10%;" id="output" />
+            <hr>
+            <input type="submit" class="registerbtn" value="Create" />
+        </div>
+    </form>
+
+</body>
+<script src="../Scripts/CreateToDo.js"></script>
+<script src="../Scripts/Logout.js"></script>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Css/Login.css">
+</head>
+
+<body>
+
+
+    <form name="ToDoLogin" onsubmit="return checkLogin()" method="POST">
+        <div class="container">
+            <h1>Login</h1>
+
+
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            <hr>
+            <label for="pwd"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="pwd" id="pwd" required>
+
+            <hr>
+
+            <input type="submit" class="registerbtn" value="Login" />
+        </div>
+        <p>Register Here <a href="../Views/Registration.html">Register Here</a>.</p>
+    </form>
+
+</body>
+<script src="../Scripts/Login.js"></script>
+
+</html>

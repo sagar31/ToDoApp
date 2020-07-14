@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Css/RegistrationForms.css">
+</head>
+
+<body>
+
+    <form onsubmit="checkRegistration()" name="CreateUser" method="POST">
+        <div class="container">
+            <h1>Register</h1>
+            <div class="container signin">
+                <p>Already have an account? <a href="../Views/login.html">Sign in</a>.</p>
+            </div>
+            <p>Please fill in this form to create an account.</p>
+            <hr>
+            <label for="email"><b>Email</b></label>
+            <input class="form-control" type="text" placeholder="Enter Email" name="email" id="email" required>
+            <label>(Username created has password same as username)</label>
+            <hr>
+            <label for="FirstName"><b>First Name</b></label>
+            <input type="text" placeholder="First Name" name="FirstName" id="FirstName" required>
+            <hr>
+            <label for="LastName"><b>Last Name</b></label>
+            <input type="text" placeholder="Last Name" name="LastName" id="LastName" required>
+            <hr>
+            <label for="Gender"><b>Gender</b></label>
+            <select name="Gender" id="Gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+            <hr>
+            <label for="Address"><b>Address</b></label>
+            <textarea rows="4" cols="30" name="Address" id="Address" required> </textarea>
+            <hr>
+            <label for="ProfileImage"><b>Profile Image</b></label>
+            <input type="file" name="ProfileImage" id="ProfileImage" accept="image/*" onchange="getImageData();" required>
+            <img style="height: 5%;width: 10%;" id="output" />
+            <hr>
+
+            <button type="submit" class="registerbtn">Register</button>
+        </div>
+
+    </form>
+
+</body>
+<script src="../Scripts/Login.js"></script>
+<script src="../Scripts/Registration.js"></script>
+
+</html>

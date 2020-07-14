@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../Css/ProfileDashboard.css">
+</head>
+
+<body>
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+        <h2>Profile Dashboard</h2>
+      </div>
+      <div class="col-md-2">
+        <button type="button" onclick="Logout()" class="registerbtn">Logout</button>
+      </div>
+    </div>
+
+    <div class="row" style="margin:15% 0 0 0;">
+      <div style='text-align: center' style="margin:25px 25px 25px 25px;">
+        <button type="button" onclick="RedirectProfileView()" class="registerbtn">View Profile</button>
+
+        <button type="button" onclick="RedirectToDoView()" class="registerbtn">View ToDoList</button>
+      </div>
+    </div>
+  </form>
+</body>
+<script src="../Scripts/ProfileDashboard.js"></script>
+<script src="../Scripts/Logout.js"></script>
+
+</html>
