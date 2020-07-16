@@ -1,8 +1,8 @@
 var expanded = false;
-var ValidToDoList = [];
-var profileImage, UserId, user = "",
+var validToDoList = [];
+var profileImage, userId, user = "",
     todo;
-var Categoryvalues = "";
+var categoryvalues = "";
 var temptodoid;
 //get valid user list if present in localStorage on load
 window.onload = function() {
@@ -10,15 +10,16 @@ window.onload = function() {
     if (sessionStorage.IsLoggedIn == undefined || sessionStorage.IsLoggedIn == false) {
         window.location.href = "../Views/Login.html";
     }
-    UserId = window.sessionStorage.UserId;
+    userId = window.sessionStorage.UserId;
     if (localStorage.getItem("ValidToDoList") !== null) {
-        ValidToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
-        todo = ValidToDoList.filter(function(index) {
+        validToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
+        todo = validToDoList.filter(function(index) {
             if (index.ToDoId == localStorage.CurrentToDoItem) {
                 return index;
             }
         });
     }
+
     temptodoid = todo[0].ToDoId;
     document.getElementById('output').src = todo[0].ProfileImage;
     profileImage = todo[0].ProfileImage;
@@ -74,51 +75,53 @@ function showCheckboxesForm() {
 
 function EditItem() {
 
-    var ToDoItemtext = document.forms["EditToDo"]["ToDoItem"].value;
-    var Date = document.forms["EditToDo"]["Date"].value;
-    Categoryvalues = (document.getElementById("Practical").checked == true ? document.getElementById("Practical").value : "");
-    Categoryvalues = Categoryvalues + ',' + (document.getElementById("Technical").checked == true ? document.getElementById("Technical").value : "");
-    var Categories = Categoryvalues.replace(/^,|,$/g, '');
+    var editToDoForm = document.forms.EditToDo;
+    var toDoItemtext = editToDoForm.elements.ToDoItem.value;
+    var date = editToDoForm.elements.Date.value;
+    categoryvalues = (editToDoForm.elements.Practical.checked == true ? editToDoForm.elements.Practical.value : "");
+    categoryvalues = categoryvalues + ',' + (editToDoForm.elements.Technical.checked == true ? editToDoForm.elements.Technical.value : "");
+    var categories = categoryvalues.replace(/^,|,$/g, '');
     var e = document.getElementById("Status");
-    var Status = e.options[e.selectedIndex].value;
-    var IsReminderYesorNo = (document.forms["EditToDo"]["isReminder"].value == "Yes") ? "Yes" : "No";
-    var ReminderDate = document.forms["EditToDo"]["ReminderDate"].value;
-    if (IsReminderYesorNo == "No") {
-        ReminderDate = "";
+    var status = e.options[e.selectedIndex].value;
+    var isReminderYesorNo = (editToDoForm.elements.isReminder.value == "Yes") ? "Yes" : "No";
+    var reminderDate = editToDoForm.elements.ReminderDate.value;
+    if (isReminderYesorNo == "No") {
+        reminderDate = "";
     }
-    var isPublic = (document.forms["EditToDo"]["isPublic"].value == "Yes") ? "Yes" : "No";
+    var isPublic = (editToDoForm.elements.isPublic.value == "Yes") ? "Yes" : "No";
 
-    function ToDoList(todoid, toDoItemtext, categories, date, profileImage, userid, reminder, reminderdate, markdone, ispublic) {
+    function ToDoList(todoid, toDoItemtext, categories, date, profileImage, userId, reminder, reminderdate, markdone, ispublic) {
         this.ToDoId = todoid;
-        this.ToDoItem = toDoItemtext;
+        this.ToDoItem = toDoItemtext
         this.Categories = categories;
         //this.UserName = username;
         this.Date = date;
         this.ProfileImage = profileImage;
-        this.UserId = userid;
+        this.UserId = userId;
         this.Reminder = reminder;
         this.ReminderDate = reminderdate;
         this.Status = markdone;
         this.isPublic = ispublic;
     }
 
+    //--------
     // edit a ToDo object
-    var TodoObj = new ToDoList(temptodoid, ToDoItemtext, Categories, Date, profileImage, UserId, IsReminderYesorNo, ReminderDate, Status, isPublic);
+    var todoObj = new ToDoList(temptodoid, toDoItemtext, categories, date, profileImage, userId, isReminderYesorNo, reminderDate, status, isPublic);
 
-    var foundIndex = ValidToDoList.findIndex(x => x.UserId == UserId && x.ToDoId == localStorage.CurrentToDoItem);
-    ValidToDoList[foundIndex] = TodoObj;
+    var foundIndex = validToDoList.findIndex(x => x.UserId == userId && x.ToDoId == localStorage.CurrentToDoItem);
+    validToDoList[foundIndex] = todoObj;
 
-    localStorage.setItem("ValidToDoList", JSON.stringify(ValidToDoList));
+    localStorage.setItem("ValidToDoList", JSON.stringify(validToDoList));
 }
 
 function EditToDoItem() {
-    var boolvalue = ValidateReminder();
-    var catehoryval = ValidateCategory();
-    if (!catehoryval) {
+    var boolValue = ValidateReminder();
+    var categoryVal = ValidateCategory();
+    if (!categoryVal) {
         return false;
     }
 
-    if (!boolvalue) {
+    if (!boolValue) {
         return false;
     }
     EditItem();
@@ -130,10 +133,12 @@ function EditToDoItem() {
 
 
 function ValidateReminder() {
-    var val = document.getElementById("isReminderYes").checked;
-    var dateval = document.getElementById("ReminderDate").value;
+    var editTodoform = document.forms.EditToDo;
+    //var yescheck = editTodoform.elements.isReminderYes.checked;
+    var val = editTodoform.elements.isReminderYes.checked;
+    var dateVal = document.forms.EditToDo.ReminderDate.value; // document.getElementById("ReminderDate").value;
     if (val == true) {
-        if (dateval == "") {
+        if (dateVal == "") {
             alert('Reminder date is mandatory');
             return false;
         }
@@ -160,7 +165,9 @@ getImageData = function() {
 }
 
 function ChangeIsReminder() {
-    var yescheck = document.getElementById("isReminderYes").checked;
+    var editTodoform = document.forms.EditToDo;
+
+    var yescheck = editTodoform.elements.isReminderYes.checked;
     if (yescheck == true) {
         document.getElementById("divReminderDate").style.display = "block";
     } else {
@@ -169,9 +176,11 @@ function ChangeIsReminder() {
 }
 
 function ValidateCategory() {
-    var techval = document.getElementById("Technical").checked;
-    var pracval = document.getElementById("Practical").checked;
-    if (techval == true || pracval == true) {
+    var editTodoform = document.forms.EditToDo;
+
+    var techVal = editTodoform.elements.Technical.checked;
+    var pracVal = editTodoform.elements.Practical.checked;
+    if (techVal == true || pracVal == true) {
         return true;
     } else {
         alert('Category value is mandatory');

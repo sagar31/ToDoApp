@@ -1,6 +1,6 @@
-var ValidUserList = [];
-var UserName = "",
-    Password = "";
+var validUserList = [];
+var userName = "",
+    password = "";
 
 window.onload = (function() {
     if (sessionStorage.IsLoggedIn == "true") {
@@ -8,21 +8,23 @@ window.onload = (function() {
         window.location.href = "../Views/ProfileDashboard.html";
     }
     if (localStorage.getItem("ValidUserList") !== null) {
-        ValidUserList = JSON.parse(localStorage.getItem("ValidUserList"));
+        validUserList = JSON.parse(localStorage.getItem("ValidUserList"));
     }
 })();
 
 function checkLogin() {
 
-    UserName = document.forms["ToDoLogin"]["email"].value;
-    Password = document.forms["ToDoLogin"]["pwd"].value;
-    var validuser;
-    ValidUserList.forEach(function(index) {
-        if (index.UserName == UserName && index.Password == Password) {
-            validuser = true;
+
+    var loginForm = document.forms.ToDoLogin;
+    userName = loginForm.elements.email.value;
+    password = loginForm.elements.pwd.value;
+    var validUser;
+    validUserList.forEach(function(index) {
+        if (index.UserName == userName && index.Password == password) {
+            validUser = true;
         }
     })
-    if (validuser == true) {
+    if (validUser == true) {
 
         // Set SessionStorage()
         SetSessionStoorageLoggedIn();
@@ -37,8 +39,8 @@ function checkLogin() {
 
 function SetSessionStoorageLoggedIn() {
 
-    var user = ValidUserList.filter(function(index) {
-        if (index.UserName == UserName && index.Password == Password) {
+    var user = validUserList.filter(function(index) {
+        if (index.UserName == userName && index.Password == password) {
             return index;
         }
 

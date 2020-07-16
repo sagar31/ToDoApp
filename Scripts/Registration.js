@@ -1,5 +1,5 @@
 'use Strict'
-var ValidUserList = [];
+var validUserList = [];
 var profileImage = "";
 //get valid user list if present in localStorage on load
 window.onload = function() {
@@ -9,43 +9,45 @@ window.onload = function() {
         window.location.href = "../Views/ProfileDashboard.html";
     }
     if (localStorage.getItem("ValidUserList") !== null) {
-        ValidUserList = JSON.parse(localStorage.getItem("ValidUserList"))
+        validUserList = JSON.parse(localStorage.getItem("ValidUserList"))
     }
 }
 
+
 function CreateUser() {
-    var UserName = document.forms["CreateUser"]["email"].value;
-    var FirstName = document.forms["CreateUser"]["FirstName"].value;
-    var LastName = document.forms["CreateUser"]["LastName"].value;
-    var Gender = document.forms["CreateUser"]["Gender"].value;
-    var Address = document.forms["CreateUser"]["Address"].value;
+    var registrationForm = document.forms.CreateUser;
+    var userName = registrationForm.elements.email.value;
+    var firstName = registrationForm.elements.FirstName.value;
+    var lastName = registrationForm.elements.LastName.value;
+    var gender = registrationForm.elements.Gender.value;
+    var address = registrationForm.elements.Address.value;
 
 
     //constructor function for User
-    function User(first, last, gender, username, address, profileImage, userid) {
+    function User(first, last, gender, username, address, profileImage, userId) {
         this.FirstName = first;
         this.LastName = last;
         this.Gender = gender;
         this.UserName = username;
         this.Address = address;
         this.ProfileImage = profileImage;
-        this.UserId = userid;
+        this.UserId = userId;
         this.Password = username;
     }
 
     // Create a Person object
-    var createdUser = new User(FirstName, LastName, Gender, UserName, Address, profileImage, getNextUserId() + 1);
+    var createdUser = new User(firstName, lastName, gender, userName, address, profileImage, getNextUserId() + 1);
 
-    ValidUserList.push(createdUser);
+    validUserList.push(createdUser);
     alert('User created Successfully;');
-    localStorage.setItem("ValidUserList", JSON.stringify(ValidUserList));
+    localStorage.setItem("ValidUserList", JSON.stringify(validUserList));
 
 
 }
 
 function checkRegistration() {
-    var boolvalue = CheckUserNameAvailable();
-    if (boolvalue == false) {
+    var boolValue = CheckUserNameAvailable();
+    if (boolValue == false) {
         alert('Username is taken. Try with a different username');
         return false;
     }
@@ -59,8 +61,8 @@ function CheckUserNameAvailable() {
     }
 
     if (localStorage.getItem("ValidUserList") !== null) {
-        ValidUserList = JSON.parse(localStorage.getItem("ValidUserList"));
-        var usernametemp = ValidUserList.filter(function(index) {
+        validUserList = JSON.parse(localStorage.getItem("ValidUserList"));
+        var usernametemp = validUserList.filter(function(index) {
             if (index.UserName == document.getElementById("email").value) {
                 return index;
             }
@@ -89,10 +91,10 @@ getImageData = function() {
 }
 
 function getNextUserId() {
-    if (ValidUserList == null || ValidUserList.length == 0) {
+    if (validUserList == null || validUserList.length == 0) {
         return 0;
     } else {
-        return Math.max.apply(Math, ValidUserList.map(function(o) { return o.UserId; }))
+        return Math.max.apply(Math, validUserList.map(function(o) { return o.UserId; }))
     }
 
 }

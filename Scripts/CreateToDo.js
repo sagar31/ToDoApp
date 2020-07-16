@@ -1,15 +1,15 @@
 var expanded = false;
-var ValidToDoList = [];
-var profileImage, UserId, user = "";
-var Categoryvalues = "";
+var validToDoList = [];
+var profileImage, userId, user = "";
+var categoryvalues = "";
 //get valid user list if present in localStorage on load
 window.onload = function() {
     if (sessionStorage.IsLoggedIn == undefined || sessionStorage.IsLoggedIn == false) {
         window.location.href = "../Views/Login.html";
     }
-    UserId = window.sessionStorage.UserId;
+    userId = window.sessionStorage.UserId;
     if (localStorage.getItem("ValidToDoList") !== null) {
-        ValidToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
+        validToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
     }
 
     var today = new Date().toISOString().split('T')[0];
@@ -31,29 +31,29 @@ function showCheckboxesForm() {
 
 
 function CreateItem() {
-
-    var ToDoItemtext = document.forms["CreateToDo"]["ToDoItem"].value;
-    var Date = document.forms["CreateToDo"]["Date"].value;
-    Categoryvalues = (document.getElementById("Practical").checked == true ? document.getElementById("Practical").value : "");
-    Categoryvalues = Categoryvalues + ',' + (document.getElementById("Technical").checked == true ? document.getElementById("Technical").value : "");
-    var Categories = Categoryvalues.replace(/^,|,$/g, '');
+    var createToDoForm = document.forms.CreateToDo;
+    var toDoItemtext = createToDoForm.elements.ToDoItem.value; //document.forms["CreateToDo"]["ToDoItem"].value;
+    var date = createToDoForm.elements.Date.value; //document.forms["CreateToDo"]["Date"].value;
+    categoryvalues = (document.getElementById("Practical").checked == true ? document.getElementById("Practical").value : "");
+    categoryvalues = categoryvalues + ',' + (document.getElementById("Technical").checked == true ? document.getElementById("Technical").value : "");
+    var categories = categoryvalues.replace(/^,|,$/g, '');
     var e = document.getElementById("Status");
-    var Status = e.options[e.selectedIndex].value;
-    var IsReminderYesorNo = (document.forms["CreateToDo"]["isReminder"].value == "Yes") ? "Yes" : "No";
-    var ReminderDate = document.forms["CreateToDo"]["ReminderDate"].value;
-    if (IsReminderYesorNo == "No") {
-        ReminderDate = "";
+    var status = e.options[e.selectedIndex].value;
+    var isReminderYesorNo = (createToDoForm.elements.isReminder.value == "Yes") ? "Yes" : "No";
+    var reminderDate = createToDoForm.elements.ReminderDate.value; // document.forms["CreateToDo"]["ReminderDate"].value;
+    if (isReminderYesorNo == "No") {
+        reminderDate = "";
     }
-    var isPublic = (document.forms["CreateToDo"]["isPublic"].value == "Yes") ? "Yes" : "No";
+    var isPublic = (createToDoForm.elements.isPublic.value == "Yes") ? "Yes" : "No";
 
-    function ToDoList(todoid, toDoItemtext, categories, date, profileImage, userid, reminder, reminderdate, markdone, ispublic) {
+    function ToDoList(todoid, toDoItemtext, categories, date, profileImage, userId, reminder, reminderdate, markdone, ispublic) {
         this.ToDoId = todoid;
         this.ToDoItem = toDoItemtext
         this.Categories = categories;
         //this.UserName = username;
         this.Date = date;
         this.ProfileImage = profileImage;
-        this.UserId = userid;
+        this.UserId = userId;
         this.Reminder = reminder;
         this.ReminderDate = reminderdate;
         this.Status = markdone;
@@ -61,10 +61,10 @@ function CreateItem() {
     }
 
     // Create a ToDo object
-    var TodoObj = new ToDoList(getNextToDoId() + 1, ToDoItemtext, Categories, Date, profileImage, UserId, IsReminderYesorNo, ReminderDate, Status, isPublic);
+    var todoObj = new ToDoList(getNextToDoId() + 1, toDoItemtext, categories, date, profileImage, userId, isReminderYesorNo, reminderDate, status, isPublic);
 
-    ValidToDoList.push(TodoObj);
-    localStorage.setItem("ValidToDoList", JSON.stringify(ValidToDoList));
+    validToDoList.push(todoObj);
+    localStorage.setItem("ValidToDoList", JSON.stringify(validToDoList));
 
 }
 
@@ -85,9 +85,9 @@ function ValidateReminder() {
 }
 
 function ValidateCategory() {
-    var techval = document.getElementById("Technical").checked;
-    var pracval = document.getElementById("Practical").checked;
-    if (techval == true || pracval == true) {
+    var techVal = document.getElementById("Technical").checked;
+    var pracVal = document.getElementById("Practical").checked;
+    if (techVal == true || pracVal == true) {
         return true;
     } else {
         alert('Category value is mandatory');
@@ -100,12 +100,12 @@ function ValidateCategory() {
 
 
 function CreateToDoItem() {
-    var boolvalue = ValidateReminder();
-    if (!boolvalue) {
+    var boolValue = ValidateReminder();
+    if (!boolValue) {
         return false;
     }
-    var catehoryval = ValidateCategory();
-    if (!catehoryval) {
+    var categoryVal = ValidateCategory();
+    if (!categoryVal) {
         return false;
     }
 
@@ -116,11 +116,11 @@ function CreateToDoItem() {
 }
 
 function getNextToDoId() {
-    if (ValidToDoList.length == 0) {
+    if (validToDoList.length == 0) {
         return 0;
     } else {
-        var arr = ValidToDoList.filter(function(counter) {
-            return counter.UserId == UserId;
+        var arr = validToDoList.filter(function(counter) {
+            return counter.UserId == userId;
         });
         if (arr.length == 0 || arr == null) {
             return 0;
@@ -147,8 +147,8 @@ getImageData = function() {
 }
 
 function ChangeIsReminder() {
-    var yescheck = document.getElementById("isReminderYes").checked;
-    if (yescheck == true) {
+    var yesCheck = document.getElementById("isReminderYes").checked;
+    if (yesCheck == true) {
         document.getElementById("divReminderDate").style.display = "block";
     } else {
         document.getElementById("divReminderDate").style.display = "none";

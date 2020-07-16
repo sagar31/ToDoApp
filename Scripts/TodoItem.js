@@ -1,13 +1,13 @@
 var expanded = false;
-var ValidToDoList = [];
-var profileImage, UserId, user = "",
+var validToDoList = [];
+var profileImage, userId, user = "",
     todo;
-var Categoryvalues = "";
+var categoryvalues = "";
 var temptodoid;
-var UserValidToDoList = [];
+var userValidToDoList = [];
 var arrHead = ['ToDoId', 'ToDoItem', 'Date', 'Categories', 'Status', 'ReminderDate']; // table headers.
 var editdelHead = ['Edit', 'Delete', 'Check'];
-var multideletevalue = [];
+var multiDeleteValue = [];
 var sortType = "asc";
 var sortTypestring = "asc";
 var filter1 = "",
@@ -23,17 +23,17 @@ window.onload = (function() {
     if (sessionStorage.IsLoggedIn == undefined || sessionStorage.IsLoggedIn == false) {
         window.location.href = "../Views/Login.html";
     }
-    UserId = window.sessionStorage.UserId;
+    userId = window.sessionStorage.UserId;
     if (localStorage.getItem("ValidToDoList") !== null) {
-        ValidToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
-        UserValidToDoList = ValidToDoList.filter(function(index) {
+        validToDoList = JSON.parse(localStorage.getItem("ValidToDoList"));
+        userValidToDoList = validToDoList.filter(function(index) {
             if (index.UserId == sessionStorage.UserId) {
                 return index;
             }
         });
     }
 
-    generateTable(UserValidToDoList);
+    generateTable(userValidToDoList);
     var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("Date")[0].setAttribute('min', today);
 
@@ -166,14 +166,14 @@ function OnedeleteRow(row) {
 
     //var d = row.parentNode.parentNode.rowIndex;
     //document.getElementById('myTable').deleteRow(d); 
-    var deletedvalue = [];
-    deletedvalue[0] = row.parentNode.parentNode.children[0].innerText;
-    ValidToDoList = ValidToDoList.filter(function(index) {
-        if (!deletedvalue.includes(index.ToDoId.toString())) {
+    var deletedValue = [];
+    deletedValue[0] = row.parentNode.parentNode.children[0].innerText;
+    validToDoList = validToDoList.filter(function(index) {
+        if (!deletedValue.includes(index.ToDoId.toString())) {
             return index;
         }
     });
-    localStorage.setItem("ValidToDoList", JSON.stringify(ValidToDoList));
+    localStorage.setItem("ValidToDoList", JSON.stringify(validToDoList));
     alert('Item deleted Successfully!!');
     window.location.reload();
 }
@@ -181,11 +181,11 @@ function OnedeleteRow(row) {
 function MultideleteRow(row) {
     //var d = row.parentNode.parentNode.rowIndex;
     var deleteTodolist = row.parentNode.parentNode.children[0].innerText;
-    if (row.checked)
-        multideletevalue.push(deleteTodolist);
-    else
-        multideletevalue = multideletevalue.filter(function(e) { return e !== deleteTodolist.toString() })
-
+    if (row.checked) {
+        multiDeleteValue.push(deleteTodolist);
+    } else {
+        multiDeleteValue = multiDeleteValue.filter(function(e) { return e !== deleteTodolist.toString() })
+    }
 }
 
 function Clearfilters() {
@@ -201,18 +201,17 @@ function Clearfilters() {
 }
 
 function MultipleDelete() {
-
-    if (multideletevalue.length == 0) {
+    if (multiDeleteValue.length == 0) {
         alert('One Item needs to be selected for deletion !!');
         return;
     }
 
-    ValidToDoList = ValidToDoList.filter(function(index) {
-        if (!multideletevalue.includes(index.ToDoId.toString())) {
+    validToDoList = validToDoList.filter(function(index) {
+        if (!multiDeleteValue.includes(index.ToDoId.toString())) {
             return index;
         }
     });
-    localStorage.setItem("ValidToDoList", JSON.stringify(ValidToDoList));
+    localStorage.setItem("ValidToDoList", JSON.stringify(validToDoList));
     alert('Items deleted Successfully!!');
     window.location.reload();
 }
@@ -243,10 +242,10 @@ function Mainfilter(filter1, filter2, filter3, filter4, filter5) {
             }
             if (
                 (txtValue[1].toUpperCase().indexOf(filter1.toUpperCase()) > -1) &&
-                (filter2.indexOf(txtValue[2]) > -1 || filter2 == "") &&
+                ((txtValue[2].indexOf(filter2.split(',')[0]) > -1 || txtValue[2].indexOf(filter2.split(',')[1]) > -1) || filter2 == "") &&
                 (filter3 >= txtValue[3] || filter3 == "") &&
                 (filter4 <= txtValue[4] || filter4 == "") &&
-                (filter5.indexOf(txtValue[5]) > -1 || filter5 == "")
+                ((txtValue[5].indexOf(filter5.split(',')[0]) > -1 || txtValue[5].indexOf(filter5.split(',')[1]) > -1) || filter5 == "")
             ) {
                 tr[i].style.display = "";
             } else {
@@ -264,7 +263,7 @@ function SortId() {
         sortType = "asc";
     }
 
-    UserValidToDoList.sort(function(a, b) {
+    userValidToDoList.sort(function(a, b) {
         return sortType === "asc" ? a.ToDoId - b.ToDoId : -(a.ToDoId - b.ToDoId);
     });
     generatedSortedTabled();
@@ -277,7 +276,7 @@ function SortToDoinput() {
     } else
         sortTypestring = "asc";
 
-    UserValidToDoList.sort(function(a, b) {
+    userValidToDoList.sort(function(a, b) {
         return sortTypestring === "asc" ? a.ToDoItem.localeCompare(b.ToDoItem) : -(a.ToDoItem.localeCompare(b.ToDoItem));
     });
     generatedSortedTabled();
@@ -290,7 +289,7 @@ function generatedSortedTabled() {
     for (var j = 1; j < rowcount; j++) {
         document.getElementById("myTable").deleteRow(1);
     }
-    generateTable(UserValidToDoList);
+    generateTable(userValidToDoList);
     Mainfilter(filter1, filter2, filter3, filter4, filter5);
 }
 
